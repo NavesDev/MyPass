@@ -1,11 +1,23 @@
 langs={
     "pt-br":{
         1:"Senha sem Título",
-        2:"NOVA SENHA"
+        2:"NOVA SENHA",
+        3:"Nova Senha",
+        4:"Senha",
+        5:"Título",
+        6:"Opcional",
+        7:"Salvar",
+        8:"Configurações"
     },
     "en-us":{
         1:"Untitled password",
-        2:"NEW PASSWORD"
+        2:"NEW PASSWORD",
+        3:"New Password",
+        4:"Password",
+        5:"Title",
+        6:"Optional",
+        7:"Save",
+        8:"Configurations"
     }
 }
 
