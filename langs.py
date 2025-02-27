@@ -7,7 +7,9 @@ langs={
         5:"Título",
         6:"Opcional",
         7:"Salvar",
-        8:"Configurações"
+        8:"Configurações",
+        9:"Segurança",
+        10:"Senhas"
     },
     "en-us":{
         1:"Untitled password",
@@ -17,7 +19,9 @@ langs={
         5:"Title",
         6:"Optional",
         7:"Save",
-        8:"Configurations"
+        8:"Settings",
+        9:"Security",
+        10:"Passwords"
     }
 }
 
