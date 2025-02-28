@@ -9,7 +9,9 @@ langs={
         7:"Salvar",
         8:"Configurações",
         9:"Segurança",
-        10:"Senhas"
+        10:"Senhas",
+        11:"Atualizações",
+        12:'TempMail'
     },
     "en-us":{
         1:"Untitled password",
@@ -21,7 +23,9 @@ langs={
         7:"Save",
         8:"Settings",
         9:"Security",
-        10:"Passwords"
+        10:"Passwords",
+        11:"Updates",
+        12:"TempMail"
     }
 }
 

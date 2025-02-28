@@ -44,5 +44,6 @@ class AutoPlace():
 
 def newCTkImg(local,size={'x':0,'y':0}):
     img = Image.open(local)
-    img.resize((size['x'],size['y']))
+    if(not(size==False)):
+        img.resize((size['x'],size['y']))
     return CTkImage(img)
