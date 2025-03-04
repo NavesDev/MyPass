@@ -2,11 +2,14 @@ import langs;
 from customtkinter import *;
 from PIL import Image,ImageTk;
 from frontElements import *;
+
 import tkinter
 
 background="#1F1F1F"
-myLang=langs.Lang("en-us")
+myLang=langs.Lang()
 myWords = myLang.langWords
+myWindows = newWindowsPack()
+
 
 def closeWindowFunc(window):
     def closeW():
@@ -19,7 +22,8 @@ def newHeader(root):
         root.quit()
 
     def minimize_window():
-        root.iconify()
+        #root.iconify()
+        root.withdraw()
 
     def move_window(e):
         root.geometry(f"+{e.x_root+mousePos['x']}+{e.y_root+mousePos['y']}")
@@ -49,7 +53,9 @@ def newHeader(root):
 
 def newPassWindow():
         pw=CTkToplevel()
+        myWindows.newWindow(pw)
         pw.title(myWords[3])
+    
         pw.geometry("200x300")
         pw.resizable(False,False)
         pw.maxsize(width=200,height=300)
@@ -62,6 +68,7 @@ def newPassWindow():
         scrFrame.pack()
         
         saveButton = CTkButton(pw,text=myWords[7],fg_color='#E0A307',font=('Poppins Bold',16),hover_color='#C08B06',width=200,corner_radius=5,height=30)
+        
         saveButton.pack(fill='x',pady=0)
 
         backIcon = Image.open('assets/icons/backButton.png')
@@ -88,7 +95,8 @@ def newPassWindow():
         inpEmail=CTkEntry(scrFrame,font=("poppins semibold",14),placeholder_text=f"({myWords[6]})")
         inpEmail.pack(pady=3) 
         
-        CTkLabel(scrFrame,text="Website",font=("poppins semibold",15)).pack(pady=1)
+        CTkLabel(scrFrame,text="Website",font=("poppins semibold",15),).pack(pady=1)
+
         
         inpWebsite=CTkEntry(scrFrame,font=("poppins semibold",14),placeholder_text=f"({myWords[6]})")
         inpWebsite.pack(pady=3) 
@@ -98,9 +106,8 @@ def newPassWindow():
 
 
 def window1():
-    
     window = tkinter.Tk()
-
+    myWindows.newWindow(window)
     window.config(background="#242424")
     window.title("MyPass")
     window.maxsize(width=550,height=500)
@@ -109,7 +116,7 @@ def window1():
     set_appearance_mode("dark")
     window.geometry("600x500+200+200")
     
-    
+   
     
 
     window.overrideredirect(True)
@@ -127,15 +134,46 @@ def window1():
 
     tab1 = CTkFrame(window,width=370,height=460)
     
-    scrFrame = CTkScrollableFrame(tab1,width=350,height=440,fg_color='transparent')
-    scrFrame.place(anchor="center",relx="0.5",rely="0.5")
+    frame = CTkFrame(tab1,fg_color='transparent')
+    frame.place(relx=0.5,rely=0.5,anchor='center')
+    title = CTkLabel(frame,font=("poppins semibold",24))
+    title.pack(side='top')
+    myLang.setObjWord(title,13)
 
-    CTkLabel(scrFrame,text="Teste 1",font=("poppins semibold",15)).pack(pady=1)
+    version=CTkLabel(frame,font=("poppins regular",16))
+    version.pack(side='top')
+    myLang.setObjWord(version,14)
+    
 
     tab2 = CTkFrame(window,width=370,height=460)
     
-    CTkLabel(tab2,text="Teste2",font=("poppins semibold",15)).place(relx='0.5',rely='0.5',anchor='center')
+    scrFrame = CTkScrollableFrame(tab2,width=350,height=440,fg_color='transparent')
+    scrFrame.place(anchor="center",relx="0.5",rely="0.5")
+    
+    title = CTkLabel(scrFrame,font=("poppins medium",20))
+    title.pack(side='top',pady=5)
+    myLang.setObjWord(title,8)
+    
+    subtitle = CTkLabel(scrFrame,font=("poppins regular",18))
+    subtitle.pack(side='left',padx=5,fill='x')
+    myLang.setObjWord(subtitle,15)
+
+    optLabel = CTkLabel(scrFrame,font=("poppins",16))
+    optLabel.pack(side='left')
+    myLang.setObjWord(optLabel,16)
+
+    
+    opts = langs.getLangsNames("upper")
+    def updLang(choice):
+        myLang.updateLang(choice)
+    opMenu = CTkOptionMenu(scrFrame,values=opts,command=updLang)
+    
+    opMenu.set(langs.getSelectedLang().upper())
+    opMenu.pack(side='left')
+
     tab3 = CTkFrame(window,width=370,height=460)
+
+    
 
     tab4 = CTkFrame(window,width=370,height=460)
 
@@ -168,34 +206,40 @@ def window1():
     img = newCTkImg("assets/icons/passwordButton.png",{'x':12,'y':12})
     
     button1 = newMenuB()
-    button1.configure(text=myWords[10].upper(),command=newTab.linkTab("passwords"),image=img)
+    button1.configure(command=newTab.linkTab("passwords",button1),image=img)
+    myLang.setObjWord(button1,10,'upper')
+
     myFlex = AutoPlace(button1,40,{'x':0,'y':60,"relx":0.5,"rely":0,'anchor':'n'})
 
     img = newCTkImg("assets/icons/tempButton.png",{'x':12,'y':12})
 
     button2 = newMenuB()
-    button2.configure(text=myWords[12].upper(),command=newTab.linkTab("tempE"),image=img)
+    button2.configure(command=newTab.linkTab("tempE",button2),image=img)
+    myLang.setObjWord(button2,12,'upper')
     myFlex.addObj(button2)
 
     img = newCTkImg("assets/icons/securityButton.png",{'x':12,'y':12})
 
     button2 = newMenuB()
-    button2.configure(text=myWords[9].upper(),command=newTab.linkTab("security"),image=img)
+    button2.configure(command=newTab.linkTab("security",button2),image=img)
+    myLang.setObjWord(button2,9,'upper')
     myFlex.addObj(button2)
 
 
     img = newCTkImg("assets/icons/configButton.png",{'x':12,'y':12})
 
     button2 = newMenuB()
-    button2.configure(text=myWords[8].upper(),command=newTab.linkTab("configs"),image=img)
+    button2.configure(command=newTab.linkTab("configs",button2),image=img)
+    myLang.setObjWord(button2,8,'upper')
     myFlex.addObj(button2)
 
     img = newCTkImg("assets/icons/updateButton.png",{'x':12,'y':12})
 
     button2 = newMenuB()
-    button2.configure(text=myWords[11].upper(),command=newTab.linkTab("updates"),image=img)
+    button2.configure(command=newTab.linkTab("updates",button2),image=img)
+    myLang.setObjWord(button2,11,'upper')
     myFlex.addObj(button2)
-
-    
-
     window.mainloop()
+
+
+

@@ -1,6 +1,20 @@
 from PIL import Image;
 from customtkinter import *;
 
+class newWindowsPack():
+    def __init__(self):
+        self.openWindows = []
+        pass
+    def newWindow(self,window):
+        self.openWindows.append(window)
+    def closeWindows(self):
+        for i in self.openWindows:
+            i.quit()
+            self.openWindows.remove(i)
+    def closeWindow(self,window):
+        window.quit()
+        self.openWindows.remove(window)
+
 class MyTab():
     def __init__(self,baseTab,tabName,basePlacement):
         self.tabs={
@@ -8,21 +22,28 @@ class MyTab():
         }
         self.basePlacement=basePlacement
         bP=basePlacement
-
+        self.lb=False
         self.selectedTab=tabName
         baseTab.place(x=bP["x"],y=bP['y'],relx=bP['relx'],rely=bP['rely'],anchor=bP['anchor'])
         pass
     def addTab(self,tab,tabName):
         self.tabs[tabName]=tab
         tab.place_forget()
-    def changeTab(self,tabName):
+    def changeTab(self,tabName,button=False):
         if((tabName in self.tabs) and (tabName!=self.selectedTab)):
+            if(self.lb):
+                self.lb.configure(text_color="white",border_width=0)
+                self.lb=False
+            if(button):    
+                self.lb = button
+                button.configure(text_color='#F5EB87',border_color='#F5EB87',border_width=1.4)
+
             bP=self.basePlacement
             self.tabs[self.selectedTab].place_forget()
             self.tabs[tabName].place(x=bP["x"],y=bP['y'],relx=bP['relx'],rely=bP['rely'],anchor=bP['anchor'])
             self.selectedTab=tabName
-    def linkTab(self,tabName):
-        return lambda: self.changeTab(tabName)
+    def linkTab(self,tabName,button=False):
+        return lambda: self.changeTab(tabName,button)
 
 class AutoPlace():
     def __init__(self,firstObj,gap,basePos={"x":0,"y":0,"relx":0.5,'rely':0.5,'anchor':"center"},direction='y',wrap=False,wrapNumber=0,wrapGap=20):
@@ -47,3 +68,4 @@ def newCTkImg(local,size={'x':0,'y':0}):
     if(not(size==False)):
         img.resize((size['x'],size['y']))
     return CTkImage(img)
+
