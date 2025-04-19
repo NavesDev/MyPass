@@ -1,4 +1,4 @@
-from appData import *
+from appData import appVersion
 
 langs={
     "pt-br":{

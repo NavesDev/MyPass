@@ -2,14 +2,16 @@ import langs;
 from customtkinter import *;
 from PIL import Image,ImageTk;
 from frontElements import *;
-
+from myScripts import dataSave,dataDecodify;
 import tkinter
 
 background="#1F1F1F"
 myLang=langs.Lang()
 myWords = myLang.langWords
 myWindows = newWindowsPack()
-
+subPadsX=10
+configPadsX=20
+userSettings = dataDecodify("userSettings")
 
 def closeWindowFunc(window):
     def closeW():
@@ -42,11 +44,11 @@ def newHeader(root):
     header.bind("<B1-Motion>",move_window)
 
 
-    img = newCTkImg("assets/clsB.png",{'x':14,'y':14})
+    img = newCTkImg("assets/images/clsB.png",{'x':14,'y':14})
     closeB = CTkButton(header,width=30,height=30,text='',command=close_window,fg_color='transparent',hover_color='red',image=img)
     closeB.pack(side='right')
 
-    img = newCTkImg("assets/minB.png",{'x':14,'y':14})
+    img = newCTkImg("assets/images/minB.png",{'x':14,'y':14})
     minimB = CTkButton(header,width=30,height=30,text='',command=minimize_window,fg_color='transparent',hover_color='#343434',image=img)
     minimB.pack(side='right')
     return header
@@ -105,6 +107,9 @@ def newPassWindow():
         pw.mainloop()
 
 
+
+
+
 def window1():
     window = tkinter.Tk()
     myWindows.newWindow(window)
@@ -154,26 +159,30 @@ def window1():
     title.pack(side='top',pady=5)
     myLang.setObjWord(title,8)
     
+    
     subtitle = CTkLabel(scrFrame,font=("poppins regular",18))
-    subtitle.pack(side='left',padx=5,fill='x')
+    subtitle.pack(side='top',anchor='w',padx=subPadsX)
     myLang.setObjWord(subtitle,15)
 
-    optLabel = CTkLabel(scrFrame,font=("poppins",16))
-    optLabel.pack(side='left')
+
+    hold = newSupportFrame(scrFrame)
+    hold.pack(side='top',anchor='w',padx=configPadsX)
+
+    optLabel = CTkLabel(hold,font=("poppins",16))
+    optLabel.pack(side='left',padx=5)
     myLang.setObjWord(optLabel,16)
 
     
     opts = langs.getLangsNames("upper")
     def updLang(choice):
         myLang.updateLang(choice)
-    opMenu = CTkOptionMenu(scrFrame,values=opts,command=updLang)
+    opMenu = newOpMenu(hold)
+    opMenu.configure(values=opts,command=updLang)
     
     opMenu.set(langs.getSelectedLang().upper())
     opMenu.pack(side='left')
 
     tab3 = CTkFrame(window,width=370,height=460)
-
-    
 
     tab4 = CTkFrame(window,width=370,height=460)
 
@@ -198,7 +207,7 @@ def window1():
     def newMenuB():
         return CTkButton(frame1,text="MENUB",width=160,font=("poppins bold",13),fg_color='#3a3a3a',hover_color="#232323",anchor='w')
 
-    logo = CTkImage(Image.open("assets/myLogo.png"),size=(105,38))
+    logo = CTkImage(Image.open("assets/images/myLogo.png"),size=(105,38))
     
     logoholder=CTkLabel(frame1,text='',image=logo,anchor='center')
     logoholder.place(y=10,relx=0.5,anchor='n')

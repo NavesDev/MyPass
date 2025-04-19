@@ -21,6 +21,7 @@ class MyTab():
             tabName:baseTab
         }
         self.basePlacement=basePlacement
+        self.frozenButtons = False
         bP=basePlacement
         self.lb=False
         self.selectedTab=tabName
@@ -43,8 +44,15 @@ class MyTab():
             self.tabs[tabName].place(x=bP["x"],y=bP['y'],relx=bP['relx'],rely=bP['rely'],anchor=bP['anchor'])
             self.selectedTab=tabName
     def linkTab(self,tabName,button=False):
-        return lambda: self.changeTab(tabName,button)
-
+        def func():
+            if(not(self.frozenButtons)):
+                self.changeTab(tabName,button)
+        return func
+    def freezeButtons(self):
+        self.frozenButtons=True
+    def unfreezeButtons(self):
+        self.frozenButtons=False
+        
 class AutoPlace():
     def __init__(self,firstObj,gap,basePos={"x":0,"y":0,"relx":0.5,'rely':0.5,'anchor':"center"},direction='y',wrap=False,wrapNumber=0,wrapGap=20):
         self.basePos=basePos
@@ -69,3 +77,8 @@ def newCTkImg(local,size={'x':0,'y':0}):
         img.resize((size['x'],size['y']))
     return CTkImage(img)
 
+def newSupportFrame(master):
+    return CTkFrame(master,fg_color='transparent')
+
+def newOpMenu(master):
+    return CTkOptionMenu(master,fg_color="#444444",button_color='#666666',button_hover_color="#555555",font=('poppins medium',13),dropdown_font=('poppins medium',13))

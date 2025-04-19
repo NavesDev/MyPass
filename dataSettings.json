@@ -1,0 +1,15 @@
+{
+    "userSettings": {
+        "Language":{
+            "props":{
+                "<#validEnters>": [
+                    "en-us",
+                    "pt-br",
+                    "system"
+                ],
+                "<#lowerCase>": "all"
+            },
+            "default": "system"
+        }
+    }   
+}
